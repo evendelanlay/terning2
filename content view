@@ -1,0 +1,46 @@
+import SwiftUI
+
+struct ContentView: View {
+    @State private var number: Int? = nil
+
+    var body: some View {
+        if #available(iOS 16.0, *) {
+            NavigationStack {
+                VStack(spacing: 30) {
+                    Text(numberText)
+                        .font(.system(size: 50, weight: .bold, design: .rounded))
+                        .padding()
+                    
+                    Button {
+                        roll()
+                    } label: {
+                        Text("Trill terningen")
+                            .font(.title2)
+                            .padding(.horizontal, 24)
+                            .padding(.vertical, 12)
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .clipShape(Capsule())
+                    }
+                }
+                .navigationTitle("Random 1–10")
+            }
+        } else {
+            // Fallback on earlier versions
+        }
+    }
+
+    private var numberText: String {
+        if let n = number {
+            return "\(n)"
+        } else {
+            return "Trykk på knappen"
+        }
+    }
+
+    private func roll() {
+        withAnimation(.spring) {
+            number = Int.random(in: 1...10)
+        }
+    }
+}
